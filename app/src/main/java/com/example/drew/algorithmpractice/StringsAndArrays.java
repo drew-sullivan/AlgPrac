@@ -4,14 +4,14 @@ public class StringsAndArrays {
 
     public static boolean hasAllUniqueChars(String str) {
         if (str.length() > 128) return false;
-        boolean[] charSet = new boolean[128];
-        for (int i = 0; i < str.length(); i++) {
-            int val = str.charAt(i);
-            if (charSet[val]) return false;
-            charSet[val] = true;
+        boolean[] letters = new boolean[128];
+        for (char c : str.toCharArray()) {
+            if (letters[c]) return false;
+            letters[c] = true;
         }
         return true;
     }
+
 
     public static boolean arePermutations(String s, String t) {
         if (s.length() != t.length()) return false;
@@ -21,7 +21,7 @@ public class StringsAndArrays {
             letters[c]++;
         }
         for (int i = 0; i < t.length(); i++) {
-            int c = (int) t.charAt(i);
+            int c = t.charAt(i);
             letters[c]--;
             if (letters[c] < 0) return false;
         }
