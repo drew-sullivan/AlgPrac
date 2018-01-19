@@ -12,7 +12,6 @@ public class StringsAndArrays {
         return true;
     }
 
-
     public static boolean arePermutations(String s, String t) {
         if (s.length() != t.length()) return false;
         int[] letters = new int[128];
@@ -28,6 +27,8 @@ public class StringsAndArrays {
         return true;
     }
 
+
+    //1.3 Replace spaces with '%20'. Given str (as char[]) and length of string w/o trailing spaces
     public static void urlify(char[] chars, int trueLength) {
         int numSpaces = 0;
         int index = 0;
@@ -50,14 +51,48 @@ public class StringsAndArrays {
         }
     }
 
-    public static void main(String[] args) {
-        arePermutations("tokyo", "kyoto");
+    //1.4 is a permutation of a palindrome
+    // Input: Tact Coa
+    // Output: True ("taco cat", "atco cta")
+    public static boolean isPermutationOfPalindrome(String phrase) {
+        int[] table = buildCharFrequency(phrase);
+        return checkMaxOneOdd(table);
+    }
 
-        char[] test = new char[128];
-        for (int i = 0; i < test.length; i++) {
-            test[i] = (char) i;
+    private static boolean checkMaxOneOdd(int[] table) {
+        boolean foundOdd = false;
+        for (int count : table) {
+            if (count % 2 == 1) {
+                if (foundOdd) {
+                    return false;
+                }
+                foundOdd = true;
+            }
         }
-        System.out.println("test[0]: " + test[0]);
-        System.out.println("test['a']: " + test['a']);
+        return true;
+    }
+
+    private static int[] buildCharFrequency(String phrase) {
+        int[] table = new int[Character.getNumericValue('z') - Character.getNumericValue('a') + 1];
+        for (char c : phrase.toCharArray()) {
+            int x = getCharNumber(c);
+            if (x != -1) {
+                table[x]++;
+            }
+        }
+        return table;
+    }
+
+    private static int getCharNumber(Character c) {
+        int a = Character.getNumericValue('a');
+        int z = Character.getNumericValue('z');
+        int val = Character.getNumericValue(c);
+        if (a <= val && val <= z) return val - a;
+        return -1;
+    }
+
+
+    public static void main(String[] args) {
+        //for debugging
     }
 }
