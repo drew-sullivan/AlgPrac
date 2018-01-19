@@ -28,6 +28,28 @@ public class StringsAndArrays {
         return true;
     }
 
+    public static void urlify(char[] chars, int trueLength) {
+        int numSpaces = 0;
+        int index = 0;
+        int i = 0;
+        for (i = 0; i < trueLength; i++) {
+            if (chars[i] == ' ') numSpaces++;
+        }
+        index = trueLength + (numSpaces * 2);
+        if (trueLength < chars.length) chars[trueLength] = '\0';
+        for (i = trueLength - 1; i >= 0; i--) {
+            if (chars[i] == ' ') {
+                chars[index - 1] = '0';
+                chars[index - 2] = '2';
+                chars[index - 3] = '%';
+                index -= 3;
+            } else {
+                chars[index - 1] = chars[i];
+                index--;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         arePermutations("tokyo", "kyoto");
 
