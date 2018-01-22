@@ -27,7 +27,6 @@ public class StringsAndArrays {
         return true;
     }
 
-
     //1.3 Replace spaces with '%20'. Given str (as char[]) and length of string w/o trailing spaces
     public static void urlify(char[] chars, int trueLength) {
         int numSpaces = 0;
@@ -89,6 +88,32 @@ public class StringsAndArrays {
         int val = Character.getNumericValue(c);
         if (a <= val && val <= z) return val - a;
         return -1;
+    }
+
+    //Only use insert, remove, and replace. Given 2 strings, write a function to check
+    //if they are one edit (or zero edits) away
+    //pale, ple -> true
+    //pale, bake -> false
+    //pales, pale -> true
+    public static boolean oneEditAway(String a, String b) {
+        if (Math.abs(a.length() - b.length()) > 1) return false;
+        String short_string = a.length() < b.length() ? a : b;
+        String long_string = a.length() < b.length() ? b : a;
+
+        int ss_i = 0;
+        int ls_i = 0;
+        boolean foundDifference = false;
+        while (ls_i < long_string.length() && ss_i < short_string.length()) {
+            if (short_string.charAt(ss_i) != long_string.charAt(ls_i)) {
+                if (foundDifference) return false;
+                foundDifference = true;
+                if (short_string.length() == long_string.length()) ss_i++;
+            } else {
+                ss_i++;
+            }
+            ls_i++;
+        }
+        return true;
     }
 
 
