@@ -58,6 +58,30 @@ public class StringsAndArrays {
         return checkMaxOneOdd(table);
     }
 
+    private static int getCountNum(char c) {
+        int a = Character.getNumericValue('a');
+        int z = Character.getNumericValue('z');
+        int val = Character.getNumericValue(c);
+        if (a <= val && val <= z) {
+            return val - a;
+        }
+        return -1;
+    }
+
+    public static boolean isPermOfPal(String phrase) {
+        int numOdds = 0;
+        int[] counts = new int[Character.getNumericValue('z') - Character.getNumericValue('a') + 1];
+        for (char c : phrase.toCharArray()) {
+            int val = getCountNum(c);
+            if (val != -1) {
+                counts[val]++;
+                if(counts[val] % 2 == 1) numOdds++;
+                else numOdds--;
+            }
+        }
+        return numOdds <= 1;
+    }
+
     private static boolean checkMaxOneOdd(int[] table) {
         boolean foundOdd = false;
         for (int count : table) {
@@ -116,8 +140,24 @@ public class StringsAndArrays {
         return true;
     }
 
+    public static String compress(String str) {
+        StringBuilder sb = new StringBuilder();
+        int counter = 0;
+        for (int i = 0; i < str.length(); i++) {
+            counter++;
+            if (i + 1 >= str.length() ||
+                    str.charAt(i) != str.charAt(i + 1)) {
+                sb.append(str.charAt(i));
+                sb.append(counter);
+                counter = 0;
+            }
+        }
+        return sb.length() < str.length() ? sb.toString() : str;
+    }
+
 
     public static void main(String[] args) {
-        //for debugging
+        System.out.println(compress("compress"));
+        System.out.println(compress("abbbbbc"));
     }
 }
